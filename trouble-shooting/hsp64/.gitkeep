@@ -1,0 +1,13 @@
+- docs/trouble-shooting/hsp64 디렉토리를 생성했습니다.
+- 현재는 구조 유지를 위해 .gitkeep 파일을 추가했습니다.
+- 모든 팀원은 `docs/trouble-shooting/<본인폴더>`에 개인 트러블슈팅 기록을 작성합니다.
+- 공통 템플릿(`template.md`)을 참고하여 문제 → 원인 → 해결 → 교훈 흐름에 맞게 작성하면 좋습니다.
+- 파일명 규칙은 `trouble-shooting-문제상황.md` 형식을 따릅니다.
+  예: `trouble-shooting-jwt-token-expired.md`, `trouble-shooting-docker-build-fail.md`
+- 동일한 문제를 여러 차례 다루거나 특정 날짜를 명시해야 할 경우,
+  `trouble-shooting-문제상황-YYYYMMDD.md` 형식을 사용할 수 있습니다.
+  예: `trouble-shooting-docker-build-fail-20250906.md`
+- 작성 시에는 발생 환경, 로그, 명령어, 코드 조각 등을 포함하여
+  추후 재현과 공유에 도움이 되도록 구체적으로 기록하는 것을 권장합니다.
+- 이 문서는 개인 학습 기록을 넘어서 팀 내 지식 공유 자산으로 활용되며,
+  추후 기술 블로그나 프로젝트 산출물로 확장할 수 있습니다.
