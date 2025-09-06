@@ -1,13 +1,4 @@
 ---
-name: 기능 개선 제안 (Enhancement)
-about: 기존 기능의 개선 또는 확장 작업을 제안합니다.
-title: "[Enhance] "
-labels: enhancement
-assignees: ''
-
----
-
----
 name: "기능 개선 제안 (Enhancement)"
 about: "기존 기능의 개선 또는 확장 작업을 제안합니다."
 title: "[Enhance] "
