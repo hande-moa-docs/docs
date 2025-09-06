@@ -1,7 +1,7 @@
 ---
 name: 코드 리팩토링 (Refactoring)
 about: 기능 변경 없이 코드 구조 또는 품질을 개선합니다.
-title: ''
+title: "[Refactor] "
 labels: refactor
 assignees: ''
 
