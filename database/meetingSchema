@@ -1,0 +1,112 @@
+# 반띵 - 모임 CRUD 및 지도 API 데이터베이스 스키마
+
+---
+
+## 문서 정보
+- **문서명**: 모임 CRUD 및 지도 API 데이터베이스 스키마
+- **버전**: v1.0.0
+- **작성일**: 2025.09.09
+- **작성자**: 박현수
+- **담당 모듈**: 카카오 지도 API, 모임 CRUD
+- **최종 수정일**: 2025.09.09
+
+---
+
+## 1. 데이터베이스 스키마
+
+### 1.1 모임(Meeting) 테이블
+
+```sql
+CREATE TABLE meetings (
+    meeting_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    host_id BIGINT NOT NULL COMMENT '호스트 사용자 ID',
+    title VARCHAR(50) NOT NULL COMMENT '모임 제목',
+    description TEXT COMMENT '모임 설명',
+    product_name VARCHAR(30) NOT NULL COMMENT '상품명',
+    category ENUM('FOOD', 'HOUSEHOLD', 'ETC') NOT NULL COMMENT '카테고리',
+    meeting_date DATETIME NOT NULL COMMENT '모임 날짜 및 시간',
+    min_participants INT DEFAULT 2 COMMENT '최소 인원',
+    max_participants INT NOT NULL COMMENT '최대 인원',
+    current_participants INT DEFAULT 1 COMMENT '현재 참여자 수',
+    status ENUM('RECRUITING', 'FULL', 'ONGOING', 'COMPLETED', 'CANCELLED') DEFAULT 'RECRUITING' COMMENT '모임 상태',
+
+    -- 장소 정보 (카카오 지도 API 연동)
+    address VARCHAR(255) NOT NULL COMMENT '도로명주소',
+    detailed_location VARCHAR(100) COMMENT '상세 만날 장소',
+    latitude DECIMAL(10, 8) NOT NULL COMMENT '위도',
+    longitude DECIMAL(11, 8) NOT NULL COMMENT '경도',
+    region_code VARCHAR(10) COMMENT '지역코드',
+
+    -- 이미지 및 메타데이터
+    image_url VARCHAR(500) COMMENT '이미지 URL',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    INDEX idx_host_id (host_id),
+    INDEX idx_status (status),
+    INDEX idx_meeting_date (meeting_date),
+    INDEX idx_category (category),
+    INDEX idx_latitude_longitude (latitude, longitude),
+    INDEX idx_region_code (region_code),
+
+    CONSTRAINT chk_participants CHECK (min_participants >= 2 AND max_participants <= 5),
+    CONSTRAINT chk_current_participants CHECK (current_participants >= 1)
+);
+```
+
+### 1.2 참여자(Participant) 테이블
+
+```sql
+CREATE TABLE participants (
+    participant_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    meeting_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    status ENUM('PENDING', 'APPROVED', 'REJECTED') DEFAULT 'PENDING' COMMENT '참여 상태',
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN DEFAULT FALSE COMMENT '논리적 삭제',
+
+    FOREIGN KEY (meeting_id) REFERENCES meetings(meeting_id),
+    INDEX idx_meeting_id (meeting_id),
+    INDEX idx_user_id (user_id),
+    INDEX idx_status (status),
+
+    UNIQUE KEY uk_meeting_user (meeting_id, user_id, is_deleted)
+);
+```
+
+---
+
+## 2. 비즈니스 규칙 및 제약사항
+
+### 2.1 모임 생성 제약사항
+### 3.1 모임 생성 제약사항
+- 제목: 5자 이상 50자 이하
+- 상품명: 2자 이상 30자 이하
+- 인원: 최소 2명, 최대 5명
+- 이미지: JPG, PNG 형식, 최대 5MB
+- 동일 사용자의 동일 장소, 동일 시간대 중복 모임 생성 방지
+- 사용자당 동시 운영 가능 모임 수 최대 5개
+
+### 3.2 참여 신청 제약사항
+- 로그인한 회원만 신청 가능
+- 모집중 상태의 모임만 신청 가능
+- 본인이 생성한 모임 신청 불가
+- 신청 마감 시간: 모임 시작 1시간 전
+- 신뢰도 점수 0점 미만 사용자 참여 금지
+
+### 3.3 상태 전환 규칙
+### 3.5 상태 전환 규칙
+- 모집중 → 모집마감: 정원 달성 또는 호스트 수동 마감
+- 모집중 → 진행중: 모임 시작 시간 도달 시 자동 전환
+- 진행중 → 완료: 호스트 수동 완료 또는 종료 시간 2시간 후 자동 완료
+
+---
+
+## 4. 변경 이력
+
+| 버전     | 날짜         | 변경 내용                          | 작성자 |
+|--------|------------|--------------------------------|-----|
+| v1.0.0 | 2025.09.09 | 초기 데이터베이스 스키마 작성          | 박현수 |
+
+---
