@@ -42,7 +42,7 @@
 - **와이어프레임**:
 
 
-  ![약관동의 페이지](../assets/img/wireframe/auth_wireframe_01.png)
+  ![약관동의 페이지](../assets/img/wireframe/wireframe-auth-01-20250909.png)
 
 - **레이아웃 및 구성 요소**
 
@@ -73,7 +73,7 @@
 - **와이어프레임**:
 
 
-![로그인 및 회원가입 페이지](../assets/img/wireframe/auth_wireframe_02.png)
+![로그인 및 회원가입 페이지](../assets/img/wireframe/wireframe-auth-02-20250909.png)
 
 - **레이아웃 및 구성 요소**
 
@@ -103,7 +103,7 @@
 - **와이어프레임**:
 
 
-![닉네임 설정 페이지](../assets/img/wireframe/auth_wireframe_03.png)
+![닉네임 설정 페이지](../assets/img/wireframe/wireframe-auth-03-20250909.png)
 - **레이아웃 및 구성 요소**
 
   | ID  | 구분      | 요소명       | 설명                                      |
