@@ -114,6 +114,8 @@
 
 - **와이어프레임**:
 
+![참여 인원 페이지](../assets/img/wireframe/wireframe-meeting-comment-20250910.png)
+
 - **레이아웃 및 구성 요소**
 
 | ID    | 구분     | 요소명           | 설명                                                       |
