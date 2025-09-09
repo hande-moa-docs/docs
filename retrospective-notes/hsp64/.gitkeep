@@ -1,5 +1,0 @@
-- docs/retrospective-notes/hsp64 디렉토리를 생성했습니다.
-- 현재는 구조 유지를 위해 .gitkeep 파일을 추가했습니다.
-- 모든 팀원은 `docs/retrospective-notes/<본인폴더>`에 개인 회고를 작성합니다.
-- 파일명은 `YYYY-MM-DD.md` 규칙을 따릅니다.
-- 공통 템플릿(`template.md`)을 참고하여 작성하면 좋습니다.
