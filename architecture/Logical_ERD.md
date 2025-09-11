@@ -3,7 +3,7 @@
 ## 문서 정보
 
 - **문서명**: Banthing 서비스 논리 ERD 명세서
-- **버전**: v1.1.0
+- **버전**: v1.2.0
 - **작성일**: 2025.09.10
 - **작성자**: [고동현](https://github.com/rhehdgus8831?tab=repositories)
 - **최종 수정일**: 2025.09.11
@@ -74,21 +74,21 @@
 - **설명**: 사용자가 생성하는 '소분 모임'의 핵심 정보를 담는 테이블입니다. 메인 페이지의 모임 목록과 상세 페이지를 구성하는 데 사용됩니다.
 - **비고**: `host_user_id`는 `users` 테이블을, `mart_id`는 `marts` 테이블을 참조하는 외래 키입니다. `status`와 `meeting_date`를 함께 인덱싱하여 '모집 중인 모임'을 날짜순으로 빠르게 조회할 수 있도록 최적화했습니다.
 
-| 컬럼명 | 데이터 타입 | 키 | 제약 조건                                                   | 설명 |
-| :--- | :--- | :--- |:--------------------------------------------------------| :--- |
-| `meeting_id` | BIGINT | **PK** | AUTO\_INCREMENT                                         | 모임의 고유 식별자 |
-| `host_user_id` | BIGINT | **FK** | NOT NULL, **UNIQUE**                                              | 모임 주최자(Host)의 사용자 ID (`users.user_id`) |
-| `mart_id` | BIGINT | **FK** | NOT NULL                                                | 모임 장소인 마트 ID (`marts.mart_id`) |
-| `title` | VARCHAR(100) | | NOT NULL                                                | 모임 제목 |
-| `description` | TEXT | |                                                         | 모임 상세 설명 |
-| `meeting_date` | TIMESTAMP | | NOT NULL                                                | 모임 약속 일시 |
-| `max_participants` | INT | | NOT NULL, DEFAULT 5                                     | 최대 참여 인원 (고정값 5명) |
-| `current_participants`| INT | | DEFAULT 1                                               | 현재 참여자 수 (주최자 포함) |
-| `status` | ENUM | | DEFAULT 'RECRUITING'                                    | 모임 상태 ('RECRUITING', 'FULL', 'ONGOING', 'COMPLETED', 'CANCELLED') |
-| `thumbnail_image_url`| VARCHAR(500) | |                                                         | 썸네일 이미지 URL |
-| `created_at` | TIMESTAMP | | DEFAULT CURRENT\_TIMESTAMP                              | 모임 생성 일시 |
+| 컬럼명 | 데이터 타입 | 키 | 제약 조건 | 설명 |
+| :--- | :--- | :--- | :--- | :--- |
+| `meeting_id` | BIGINT | **PK** | AUTO\_INCREMENT | 모임의 고유 식별자 |
+| `host_user_id` | BIGINT | **FK** | NOT NULL | 모임 주최자(Host)의 사용자 ID (`users.user_id`) |
+| `mart_id` | BIGINT | **FK** | NOT NULL | 모임 장소인 마트 ID (`marts.mart_id`) |
+| `title` | VARCHAR(100) | | NOT NULL | 모임 제목 |
+| `description` | TEXT | | | 모임 상세 설명 |
+| `meeting_date` | TIMESTAMP | | NOT NULL | 모임 약속 일시 |
+| `max_participants` | INT | | NOT NULL, DEFAULT 5 | 최대 참여 인원 (고정값 5명) |
+| `current_participants`| INT | | DEFAULT 1 | 현재 참여자 수 (주최자 포함) |
+| `status` | ENUM | | DEFAULT 'RECRUITING' | 모임 상태 ('RECRUITING', 'FULL', 'ONGOING', 'COMPLETED', 'CANCELLED') |
+| `thumbnail_image_url`| VARCHAR(500) | | | 썸네일 이미지 URL |
+| `created_at` | TIMESTAMP | | DEFAULT CURRENT\_TIMESTAMP | 모임 생성 일시 |
 | `updated_at` | TIMESTAMP | | DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP | 모임 정보 수정 일시 |
-| `deleted_at` | TIMESTAMP | |                                                         | 논리적 삭제 시점 |
+| `deleted_at` | TIMESTAMP | | | 논리적 삭제 시점 |
 
 ### 2.4. `meeting_participants`
 
@@ -141,15 +141,15 @@
     - `giver_user_id`, `receiver_user_id`, `meeting_id` 조합에 UNIQUE 제약 조건을 설정하여, 한 모임에서 동일한 사람에게 중복으로 피드백을 남길 수 없도록 합니다.
     - **`giver_user_id`와 `receiver_user_id`가 동일할 수 없도록 CHECK 제약 조건을 추가하여, 사용자가 스스로에게 피드백을 남기는 것을 원천적으로 방지합니다.**
 
-| 컬럼명 | 데이터 타입 | 키 | 제약 조건                                                          | 설명 |
-| :--- | :--- | :--- |:---------------------------------------------------------------| :--- |
-| `feedback_id` | BIGINT | **PK** | AUTO\_INCREMENT                                                | 피드백의 고유 식별자 |
-| `giver_user_id` | BIGINT | **FK** | NOT NULL,**UNIQUE**                                            | 피드백을 제공한 사용자 ID (`users.user_id`) |
-| `receiver_user_id` | BIGINT | **FK** | NOT NULL,**UNIQUE**                                            | 피드백을 받은 사용자 ID (`users.user_id`) |
-| `meeting_id` | BIGINT | **FK** | NOT NULL                                                       | 피드백이 발생한 모임 ID (`meetings.meeting_id`) |
-| `is_positive` | BOOLEAN | | NOT NULL                                                       | 긍정(true) 또는 부정(false) 피드백 여부 |
-| `created_at` | TIMESTAMP | | DEFAULT CURRENT\_TIMESTAMP                                     | 피드백 생성 일시 |
-| `updated_at` | TIMESTAMP | | DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP        | 피드백 수정 일시 |
+| 컬럼명 | 데이터 타입 | 키 | 제약 조건 | 설명 |
+| :--- | :--- | :--- | :--- | :--- |
+| `feedback_id` | BIGINT | **PK** | AUTO\_INCREMENT | 피드백의 고유 식별자 |
+| `giver_user_id` | BIGINT | **FK** | NOT NULL | 피드백을 제공한 사용자 ID (`users.user_id`) |
+| `receiver_user_id` | BIGINT | **FK** | NOT NULL | 피드백을 받은 사용자 ID (`users.user_id`) |
+| `meeting_id` | BIGINT | **FK** | NOT NULL | 피드백이 발생한 모임 ID (`meetings.meeting_id`) |
+| `is_positive` | BOOLEAN | | NOT NULL | 긍정(true) 또는 부정(false) 피드백 여부 |
+| `created_at` | TIMESTAMP | | DEFAULT CURRENT\_TIMESTAMP | 피드백 생성 일시 |
+| `updated_at` | TIMESTAMP | | DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP | 피드백 수정 일시 |
 
 -----
 
@@ -157,5 +157,6 @@
 
 | 버전 | 날짜 | 변경 내용 | 작성자 |
 | :--- | :--- |:--- |:--- |
+| v1.2.0 | 2025.09.11 | 최신 스키마와 동기화: 제약조건 수정, 디폴트 값 추가 | 고동현 |
 | v1.1.0 | 2025.09.11 | `feedbacks` 테이블에 셀프 피드백 방지 제약조건 추가 | 고동현 |
 | v1.0.0 | 2025.09.10 | 초기 문서 작성 | 고동현 |
