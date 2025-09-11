@@ -21,7 +21,7 @@
 | **상태 관리**     | **Zustand 5.0.8**                                                                               |
 | **지도**        | **react-kakao-maps-sdk 1.2.0**                                                                  |
 | **보안/인증**     | Spring Security 3.5.5, JWT (JJWT 0.12.5), Spring Security OAuth2 Client 3.5.5                   |
-| **HTTP 통신**   | **fetch**                                                                                       |
+| **HTTP 통신**   | **Axios 1.x.x**                                                                                 |
 | **AI 연동**     | Google Gemini API ( **Google Cloud Generative AI 1.2.0**)                                       |
 | **데이터베이스**    | MariaDB 11.4.x, H2 Database, Spring Data JPA 3.5.5, Hibernate ORM 6.x, QueryDSL 5.0.0 (Jakarta) |
 | **빌드/의존성 관리** | Gradle (Spring Dependency Management Plugin 1.1.7)                                              |
@@ -57,7 +57,7 @@
 * **Spring Security 3.5.5, JWT (JJWT 0.12.5), Spring Security OAuth2 Client 3.5.5**: 사용자 인증 및 권한을 관리하고 토큰 기반 로그인과 소셜 로그인 기능을 제공하는 보안 프레임워크입니다.
 
 
-* **fetch**: 별도의 라이브러리 설치 없이 HTTP 통신을 구현하기 위한 자바스크립트 내장 API입니다.
+* **Axios 1.x.x**: Promise 기반의 HTTP 클라이언트 라이브러리로, 간편한 API 요청 및 응답 처리를 지원합니다.
 
 
 * **Google Cloud Generative AI 1.2.0**: Google Gemini API를 백엔드에서 호출하여 AI 챗봇 기능을 구현하는 데 사용되는 공식 클라이언트 라이브러리입니다.
