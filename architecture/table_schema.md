@@ -2,9 +2,9 @@
 
 ## 문서 정보
 - **문서명**: 반띵 데이터베이스 테이블 스키마
-- **버전**: v1.0.3
+- **버전**: v1.0.4
 - **작성일**: 2025.09.11
-- **데이터베이스**: 김경민
+- **작성자**: 김경민
 - **최종 수정일**: 2025.09.11
 - **데이터베이스**: MariaDB
 
@@ -105,7 +105,7 @@ CREATE TABLE meetings (
     INDEX idx_recruiting (status, meeting_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
- 
+
 
 ---
 
@@ -128,7 +128,7 @@ CREATE TABLE meeting_participants (
     INDEX idx_status (application_status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
- 
+
 
 ---
 
@@ -194,7 +194,7 @@ CREATE TABLE feedbacks (
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
- 
+
 
 ---
 
@@ -221,21 +221,6 @@ ALTER TABLE feedbacks ADD FOREIGN KEY (giver_user_id) REFERENCES users(user_id) 
 ALTER TABLE feedbacks ADD FOREIGN KEY (receiver_user_id) REFERENCES users(user_id) ON DELETE CASCADE;
 ALTER TABLE feedbacks ADD FOREIGN KEY (meeting_id) REFERENCES meetings(meeting_id) ON DELETE CASCADE;
 ```
-
----
-
-## 더미 데이터 설명
-
-### 테스트 시나리오
-- **마트**: 10개 지점 (코스트코 5개, 트레이더스 4개, 롯데마트 1개)
-- **사용자**: 8명 (다양한 신뢰도 등급)
-- **모임**: 8개 (진행중 7개, 완료 1개)
-- **피드백**: 완료된 모임에서 상호 평가 시스템 테스트 가능
-
-### 신뢰도 등급별 사용자
-- **GOOD**: 최절약 (520점)
-- **BASIC**: 이소분, 정합리, 윤공유, 강커뮤 등
-- **WARNING**: 한경제 (80점)
 
 ---
 
@@ -385,8 +370,6 @@ UPDATE meetings SET current_participants = (
 );
 ```
 
-
-
 ---
 
 ## 주요 변경사항
@@ -398,6 +381,21 @@ UPDATE meetings SET current_participants = (
 
 ---
 
+## 더미 데이터 설명
+
+### 테스트 시나리오
+- **마트**: 10개 지점 (코스트코 5개, 트레이더스 4개, 롯데마트 1개)
+- **사용자**: 8명 (다양한 신뢰도 등급)
+- **모임**: 8개 (진행중 7개, 완료 1개)
+- **피드백**: 완료된 모임에서 상호 평가 시스템 테스트 가능
+
+### 신뢰도 등급별 사용자
+- **GOOD**: 최절약 (520점)
+- **BASIC**: 이소분, 정합리, 윤공유, 강커뮤 등
+- **WARNING**: 한경제 (80점)
+
+---
+
 ## 버전 이력
 
 | 버전     | 날짜         | 변경 내용 | 작성자 |
@@ -406,3 +404,4 @@ UPDATE meetings SET current_participants = (
 | v1.0.1 | 2025.09.11 | 디폴트 값 수정 | 김경민 |
 | v1.0.2 | 2025.09.11 | 피드백 시스템 추가 | 김경민 |
 | v1.0.3 | 2025.09.11 | 제약조건 수정, 문서화 | 김경민 |
+| v1.0.4 | 2025.09.11 | 더미 데이터 추가 | 김경민 |
